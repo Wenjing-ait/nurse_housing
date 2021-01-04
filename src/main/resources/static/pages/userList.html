@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome to nurse hoursing</title>
+
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <script type="text/javascript" src="/js/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script src="../layui/layui.js"></script>
+</head>
+
+<body>
+<div>
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+            <a href="">controller<span class="layui-badge">9</span></a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="">My<span class="layui-badge-dot"></span></a>
+        </li>
+        <li class="layui-nav-item">
+            <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">My</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">edit info</a></dd>
+                <dd><a href="javascript:;">quit</a></dd>
+            </dl>
+        </li>
+    </ul>
+
+    <table class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>UserName</th>
+            <th>email</th>
+            <th>birthday</th>
+            <th>id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user,stat : ${users}">
+            <!--        No，1，2，3，4，5-->
+            <td th:text="${stat.count}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.birthday}"></td>
+            <td th:text="${user.id}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    layui.use('element', function () {
+        var element = layui.element;
+
+        //一些事件监听
+        element.on('tab(demo)', function (data) {
+            console.log(data);
+        });
+    });
+
+</script>
+
+</body>
+
+</html>
