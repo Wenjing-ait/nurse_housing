@@ -12,9 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@Service
+@Service("userDetailsService")
 public class UserService implements UserDetailsService {
     @Autowired
     private UserMapper UserMapper;
@@ -38,8 +39,10 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("user is not exist");
         }
-        List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList("admin");
-        return new org.springframework.security.core.userdetails.User(user.getUserName(),
-                new BCryptPasswordEncoder().encode(user.getPassword()), auths);
+        List<GrantedAuthority> auths =
+                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_common");
+        UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getUserName()).
+                password(user.getPassword()).authorities(auths).build();
+        return userDetails;
     }
 }

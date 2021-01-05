@@ -2,6 +2,7 @@ package com.jing.controller;
 
 import com.jing.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,13 @@ public class UserController {
 
     @RequestMapping("/register")
     public String register(User user) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String password = encoder.encode(user.getPassword().trim());
+        user.setPassword(password);
         user.setUserType("common");
         UserService.insertUser(user);
         System.out.println("register....");
-        return"redirect:http:localhost:8080/registerSuccess.html";
+        return"/registerSuccess";
     }
 
     @RequestMapping("/selectUser")
@@ -38,6 +42,5 @@ public class UserController {
         System.out.println("selectUsers....");
         return "pages/userList";
     }
-
 
 }
