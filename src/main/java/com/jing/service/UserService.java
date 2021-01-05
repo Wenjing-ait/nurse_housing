@@ -41,8 +41,7 @@ public class UserService implements UserDetailsService {
         }
         List<GrantedAuthority> auths =
                 AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_common");
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getUserName()).
-                password(user.getPassword()).authorities(auths).build();
-        return userDetails;
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),
+               user.getPassword(),auths);
     }
 }

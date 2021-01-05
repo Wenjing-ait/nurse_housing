@@ -8,6 +8,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,23 +25,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.exceptionHandling().accessDeniedPage("/403.html");
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/login.html").permitAll();
         http.formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/user/login")
                 .defaultSuccessUrl("/selectUser").permitAll()
                 .and().authorizeRequests()
-                .antMatchers("/","/user/login").permitAll()
+                .antMatchers("/", "/user/login").permitAll()
 //                .anyRequest().authenticated() //all permition
                 .antMatchers("/selectUser").hasAnyAuthority("add,delete")
                 .antMatchers("/selectUser").hasAnyRole("common")
                 .antMatchers("/registerSuccess.html").permitAll()
+                //rememberMe
+                .and().rememberMe() .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(3600)
+                .userDetailsService(userDetailsService)
+
                 .and().csrf().disable();
     }
+
+    @Autowired
+    private DataSource dataSource;
+
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+//        jdbcTokenRepository.setCreateTableOnStartup(true);
+        return jdbcTokenRepository;
+    }
+
+
 }
