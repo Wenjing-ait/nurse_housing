@@ -15,10 +15,16 @@
 <body>
     <div id="login_frame">
         <p id="login_logo"><img src="images/heart.png"></p>
-        <form id="login_form" method="post" action="/login">
-            <p><label class="label_input">username</label><input type="text" id="username" class="text_field" /></p>
-            <p id="label_input_hidden1"><label ></label><input type="hidden" class="text_field" /></p>
-            <p><label class="label_input">password</label><input type="text" id="password" class="text_field" /></p>
+        <form id="login_form" method="post" action="/user/login">
+            <p><label class="label_input">username</label>
+                <input type="text" name="username" id="username" class="text_field" />
+            </p>
+            <p id="label_input_hidden1"><label ></label>
+                <input type="hidden" class="text_field" /></p>
+            <p>
+                <label class="label_input">password</label>
+                <input type="password" name="password" id="password" class="text_field" />
+            </p>
             <p id="label_input_hidden2"><label></label><input type="hidden" class="text_field" /></p>
             <div id="login_control">
                 <input type="button" id="btn_login" value="Sign in" onclick="login();" />

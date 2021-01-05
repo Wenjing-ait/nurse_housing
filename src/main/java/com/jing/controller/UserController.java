@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -14,9 +15,10 @@ public class UserController {
     @Autowired
     private com.jing.service.UserService UserService;
 
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login() {
+    public String login(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        UserService.loadUserByUsername(username);
         System.out.println("login....");
         return "login success";
     }
@@ -33,7 +35,7 @@ public class UserController {
     public String selectUser(Model model) {
         List<User> users = UserService.selectList(null);
         model.addAttribute("users",users);
-        System.out.println("register....");
+        System.out.println("selectUsers....");
         return "pages/userList";
     }
 
