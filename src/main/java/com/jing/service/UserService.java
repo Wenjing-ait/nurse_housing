@@ -2,6 +2,8 @@ package com.jing.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jing.mapper.UserMapper;
+import com.jing.pojo.Permission;
+import com.jing.pojo.Role;
 import com.jing.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,16 +11,18 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service("userDetailsService")
 public class UserService implements UserDetailsService {
     @Autowired
     private UserMapper UserMapper;
+    @Autowired
+    private PermissionService permissionService;
+    @Autowired
+    private RoleService roleService;
 
     public int insertUser(User user) {
         int insert = UserMapper.insert(user);
@@ -36,12 +40,34 @@ public class UserService implements UserDetailsService {
         QueryWrapper<User> wrapper = new QueryWrapper();
         wrapper.eq("user_name", username);
         User user = UserMapper.selectOne(wrapper);
+
+//        List<Permission> permissions = permissionService.selectPerimissionByUsername(username);
+//        StringBuffer stringBuffer = new StringBuffer();
+//        for (int i = 0; i < permissions.size(); i++) {
+//            Permission permission = permissions.get(i);
+//            stringBuffer.append(permission.getPath());
+//            if (i < permissions.size() - 1) {
+//                stringBuffer.append(",");
+//            }
+//        }
+
+        List<Role> roles = roleService.selectRoleByUsername(username);
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < roles.size(); i++) {
+            Role role = roles.get(i);
+            stringBuffer.append("ROLE_"+role.getName());
+            if (i < roles.size() - 1) {
+                stringBuffer.append(",");
+            }
+        }
+
+
         if (user == null) {
             throw new UsernameNotFoundException("user is not exist");
         }
         List<GrantedAuthority> auths =
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_common");
+                AuthorityUtils.commaSeparatedStringToAuthorityList(stringBuffer.toString());
         return new org.springframework.security.core.userdetails.User(user.getUserName(),
-               user.getPassword(),auths);
+                user.getPassword(), auths);
     }
 }

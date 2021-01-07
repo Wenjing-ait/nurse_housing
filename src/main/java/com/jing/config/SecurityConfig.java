@@ -40,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests()
                 .antMatchers("/", "/user/login").permitAll()
 //                .anyRequest().authenticated() //all permition
-                .antMatchers("/selectUser").hasAnyAuthority("add,delete")
-                .antMatchers("/selectUser").hasAnyRole("common")
+//                .antMatchers("/selectUser").hasAnyAuthority("/selectUser,delete")
+//                .antMatchers("/selectUser").hasAnyRole("common")
                 .antMatchers("/registerSuccess.html").permitAll()
                 //rememberMe
                 .and().rememberMe() .tokenRepository(persistentTokenRepository())
@@ -62,6 +62,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        jdbcTokenRepository.setCreateTableOnStartup(true);
         return jdbcTokenRepository;
     }
-
-
 }

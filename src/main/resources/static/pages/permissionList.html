@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>welcome to nurse hoursing</title>
 
-    <link rel="stylesheet" href="./layui/css/layui.css">
-    <link rel="stylesheet" href="./css/userList.css">
-    <script type="text/javascript" src="/js/jquery-3.5.1.js"></script>
-    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../css/permissionList.css">
+    <script type="text/javascript" src="/static/js/jquery-3.5.1.js"></script>
     <script src="../layui/layui.js"></script>
 </head>
 
 <body>
-<div>
+
     <div class="my-top-bar">
         <ul class="layui-nav">
             <li class="layui-nav-item">
@@ -42,7 +40,7 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">User</a></dd>
                         <dd><a href="javascript:;">Role</a></dd>
-                        <dd><a href="http://localhost:8080/selectpermission">permission</a></dd>
+                        <dd><a href="javascript:;">permission</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -57,7 +55,10 @@
                 <li class="layui-nav-item"><a href="">社区</a></li>
             </ul>
         </div>
+
         <div class="my-right-table">
+            
+
             <table class="layui-table">
                 <colgroup>
                     <col width="150">
@@ -65,41 +66,51 @@
                     <col>
                 </colgroup>
                 <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>UserName</th>
-                    <th>email</th>
-                    <th>birthday</th>
-                    <th>id</th>
-                </tr>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>category_level1</th>
+                        <th>category_level2</th>
+                        <th>path</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user,stat : ${users}">
+
+                <tr th:each="permission,stat : ${permissions}">
                     <!--        No，1，2，3，4，5-->
-                    <td th:text="${stat.count}"></td>
-                    <td th:text="${user.userName}"></td>
-                    <td th:text="${user.email}"></td>
-                    <td th:text="${user.birthday}"></td>
-                    <td th:text="${user.id}"></td>
+                    <td th:text="${permission.id}"></td>
+                    <td th:text="${permission.name}"></td>
+                    <td th:text="${permission.categoryLevel1}"></td>
+                    <td th:text="${permission.categoryLevel2}"></td>
+                    <td th:text="${permission.path}"></td>
                 </tr>
+
                 </tbody>
             </table>
+
+
+
+
         </div>
+
     </div>
-</div>
 
 
-<script>
-    layui.use('element', function () {
-        var element = layui.element;
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
 
-        //一些事件监听
-        element.on('tab(demo)', function (data) {
-            console.log(data);
+            //一些事件监听
+            element.on('tab(demo)', function (data) {
+                console.log(data);
+            });
         });
-    });
 
-</script>
+
+        
+        
+
+    </script>
 
 </body>
 
