@@ -10,6 +10,6 @@ import java.util.List;
 public interface RoleMapper extends BaseMapper<Role> {
 
     @Select("select * from role where id in (SELECT  role_id from user INNER JOIN \n" +
-            "user_role on user.id=user_role.user_id where user_name=#{user_name});")
+            "user_role on user.id=user_role.user_id where user.user_name=#{user_name});")
     List<Role> selectRoleByUsername(@Param("user_name") String username);
 }

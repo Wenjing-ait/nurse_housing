@@ -3,9 +3,9 @@ package com.jing.pojo;
 public class Permission {
     private Long id;
     private String name;
-    private String categoryLevel1;
-    private String categoryLevel2;
-    private String path;
+    private String path;//0,1,2
+    private String level;//0
+    private String URL;
 
     public Long getId() {
         return id;
@@ -23,22 +23,6 @@ public class Permission {
         this.name = name;
     }
 
-    public String getCategoryLevel1() {
-        return categoryLevel1;
-    }
-
-    public void setCategoryLevel1(String categoryLevel1) {
-        this.categoryLevel1 = categoryLevel1;
-    }
-
-    public String getCategoryLevel2() {
-        return categoryLevel2;
-    }
-
-    public void setCategoryLevel2(String categoryLevel2) {
-        this.categoryLevel2 = categoryLevel2;
-    }
-
     public String getPath() {
         return path;
     }
@@ -47,14 +31,30 @@ public class Permission {
         this.path = path;
     }
 
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
     @Override
     public String toString() {
         return "Permission{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", categoryLevel1='" + categoryLevel1 + '\'' +
-                ", categoryLevel2='" + categoryLevel2 + '\'' +
                 ", path='" + path + '\'' +
+                ", level='" + level + '\'' +
+                ", URL='" + URL + '\'' +
                 '}';
     }
 }

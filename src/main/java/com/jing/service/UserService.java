@@ -29,6 +29,13 @@ public class UserService implements UserDetailsService {
         return insert;
     }
 
+    public User selectOne(String username) {
+        QueryWrapper<User> wrapper = new QueryWrapper();
+        wrapper.eq("user_name", username);
+        User user = UserMapper.selectOne(wrapper);
+        return user;
+    }
+
     public List<User> selectList(User user) {
         List<User> users = UserMapper.selectList(null);
         return users;
@@ -60,13 +67,13 @@ public class UserService implements UserDetailsService {
                 stringBuffer.append(",");
             }
         }
-
-
         if (user == null) {
             throw new UsernameNotFoundException("user is not exist");
         }
         List<GrantedAuthority> auths =
                 AuthorityUtils.commaSeparatedStringToAuthorityList(stringBuffer.toString());
+
+
         return new org.springframework.security.core.userdetails.User(user.getUserName(),
                 user.getPassword(), auths);
     }

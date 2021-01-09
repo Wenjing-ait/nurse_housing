@@ -1,7 +1,10 @@
 package com.jing.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class User implements Serializable {
     private Long id;
@@ -14,6 +17,11 @@ public class User implements Serializable {
     private String gender;
     private Date  checkin_time;
     private Date  checkout_time;
+
+    @TableField(exist = false)
+    private List<Permission> permissionList;
+    @TableField(exist = false)
+    private List<Role> roleList;
 
     public Long getId() {
         return id;
@@ -95,6 +103,22 @@ public class User implements Serializable {
         this.checkout_time = checkout_time;
     }
 
+    public List<Permission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -104,6 +128,12 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", userType='" + userType + '\'' +
+                ", registerTime='" + registerTime + '\'' +
+                ", gender='" + gender + '\'' +
+                ", checkin_time=" + checkin_time +
+                ", checkout_time=" + checkout_time +
+                ", permissionList=" + permissionList +
+                ", roleList=" + roleList +
                 '}';
     }
 }
