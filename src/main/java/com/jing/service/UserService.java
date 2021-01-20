@@ -2,7 +2,6 @@ package com.jing.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jing.mapper.UserMapper;
-import com.jing.pojo.Permission;
 import com.jing.pojo.Role;
 import com.jing.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +71,6 @@ public class UserService implements UserDetailsService {
         }
         List<GrantedAuthority> auths =
                 AuthorityUtils.commaSeparatedStringToAuthorityList(stringBuffer.toString());
-
 
         return new org.springframework.security.core.userdetails.User(user.getUserName(),
                 user.getPassword(), auths);

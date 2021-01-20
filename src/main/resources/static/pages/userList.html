@@ -90,9 +90,13 @@
                 <tr>
                     <th>Number</th>
                     <th>UserName</th>
+                    <th>gender</th>
+                    <th>userType</th>
                     <th>email</th>
                     <th>birthday</th>
                     <th>id</th>
+                    <th>checkin_time</th>
+                    <th>checkout_time</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -100,9 +104,13 @@
                     <!--        No，1，2，3，4，5-->
                     <td th:text="${stat.count}"></td>
                     <td th:text="${user.userName}"></td>
+                    <td th:text="${user.gender}"></td>
+                    <td th:text="${user.userType}"></td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.birthday}"></td>
                     <td th:text="${user.id}"></td>
+                    <td th:text="${user.checkin_time}"></td>
+                    <td th:text="${user.checkout_time}"></td>
                 </tr>
                 </tbody>
             </table>

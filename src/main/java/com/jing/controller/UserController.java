@@ -119,6 +119,12 @@ public class UserController {
         updatedAuthorities.add(role_new_role);//add your role here [e.g., new SimpleGrantedAuthority("ROLE_NEW_ROLE")]
         Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
         SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        //update user chick_in time
+        //update user user_type
+
+
+
         return "redirect:/selectUser";
     }
 
