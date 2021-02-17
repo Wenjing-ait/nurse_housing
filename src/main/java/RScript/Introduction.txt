@@ -1,0 +1,15 @@
+1.Install Rserve on Mac   --https://rstudio-pubs-static.s3.amazonaws.com/78353_8c2ec382192c453795bb313f8f69afb9.html
+    #install.packages('Rserve', repos='http://cran.us.r-project.org')
+    library(Rserve)
+
+    #Run Rserve. This will show fatal error.
+    Rserve()
+
+2.
+
+
+
+3.
+4.
+5.
+6.

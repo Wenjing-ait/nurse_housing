@@ -6,6 +6,9 @@ body {
 .user-survey{
     width: 60%;
     margin: auto;
+    font-size: 1.5em;
+    font-weight: bolder;
+    color: floralwhite;
 }
 h2{
     margin-top: 1em;

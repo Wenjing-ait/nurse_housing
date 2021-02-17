@@ -23,6 +23,7 @@
         <h2>Survey</h2>
         <div class="layui-tab-content user-survey1" style="height: 100px;">
             <div class="layui-tab-item layui-show">
+                //form start
                 <form class="layui-form" action="">
                     <div class="gender">
                         <div class="layui-form-item">
@@ -57,45 +58,56 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">Hobbies</label>
                             <div class="layui-input-block">
-                                <input type="checkbox" name="like[Sports]" title="Sports">
-                                <input type="checkbox" name="like[Gardening]" title="Gardening" checked="">
-                                <input type="checkbox" name="like[Gaming]" title="Gaming">
-                                <input type="checkbox" name="like[Cooking]" title="Cooking">
-                                <input type="checkbox" name="like[Fitness]" title="Fitness">
-                                <input type="checkbox" name="like[Social]" title="Social">
+                                <input type="checkbox" name="hobby" value="Sports" title="Sports">
+                                <input type="checkbox" name="hobby" value="Gardening" title="Gardening" checked="">
+                                <input type="checkbox" name="hobby" value="Gaming" title="Gaming">
+                                <input type="checkbox" name="hobby" value="Cooking" title="Cooking">
+                                <input type="checkbox" name="hobby" value="Fitness" title="Fitness">
+                                <input type="checkbox" name="hobby" value="Social" title="Social">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">Consideration</label>
                             <div class="layui-input-block">
-                                <input type="checkbox" name="like[traffic]" title="traffic">
-                                <input type="checkbox" name="like[condition]" title="condition" checked="">
-                                <input type="checkbox" name="like[Exercise_equipment]"
+                                <input type="checkbox" name="consideration" value="traffic" title="traffic">
+                                <input type="checkbox" name="consideration" value="condition" title="condition"
+                                       checked="">
+                                <input type="checkbox" name="consideration" value="Exercise_equipment"
                                        title="Exercise equipment">
-                                <input type="checkbox" name="like[Recreational_facilities]"
+                                <input type="checkbox" name="consideration" value="Recreational_facilities"
                                        title="Recreational facilities">
-                                <input type="checkbox" name="like[Nursing_quality]" title="Nursing quality">
-                                <input type="checkbox" name="like[Food_quality]" title="Food quality">
-                                <input type="checkbox" name="like[Comfortable_bed]" title="Comfortable bed">
-                                <input type="checkbox" name="like[Food_quality]" title="Food quality">
-                                <input type="checkbox" name="like[Comfortable_bed]" title="Comfortable bed">
-                                <input type="checkbox" name="like[Comfortable_sofa]"
+                                <input type="checkbox" name="consideration" value="Nursing_quality"
+                                       title="Nursing quality">
+                                <input type="checkbox" name="consideration" value="Food_quality" title="Food quality">
+                                <input type="checkbox" name="consideration" value="Comfortable_bed"
+                                       title="Comfortable bed">
+                                <input type="checkbox" name="consideration" value="Food_quality" title="Food quality">
+                                <input type="checkbox" name="consideration" value="Comfortable_bed"
+                                       title="Comfortable bed">
+                                <input type="checkbox" name="consideration" value="Comfortable_sofa"
                                        title="Comfortable sofa">
-                                <input type="checkbox" name="like[Comfortable_desk]"
+                                <input type="checkbox" name="consideration" value="Comfortable_desk"
                                        title="Comfortable desk">
                             </div>
                         </div>
                     </div>
-                    <div class="btn-css">
-                        <button type="button" value="confirm" class="layui-btn layui-btn-warm">Confirm</button>
+                    <!-- <div class="btn-css">
+                         <button type="button" value="confirm" class="layui-btn layui-btn-warm">Confirm</button>
+                     </div>-->
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="userSurvey">Confirm</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">Reset</button>
+                        </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 </div>
-
 
 
 </body>
