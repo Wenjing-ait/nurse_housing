@@ -1,6 +1,5 @@
 package com.jing.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.jing.pojo.Role;
 import com.jing.pojo.User;
@@ -12,7 +11,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,10 +19,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import utils.RConnectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -62,7 +64,7 @@ public class UserController {
         return "/registerSuccess";
     }
 
-    @Secured({"ROLE_Admin", "ROLE_Normal","ROLE_VIP"})
+    @Secured({"ROLE_Admin", "ROLE_Normal", "ROLE_VIP"})
     @RequestMapping("/selectUser")
     public String selectUser(Model model) {
         List<User> users = userService.selectList(null);
@@ -72,6 +74,87 @@ public class UserController {
         System.out.println("selectUsers....");
         return "pages/userList";
     }
+
+
+    @RequestMapping("/show")
+    public String show(Model model) throws Exception {
+
+//        RConnection rConnection = RConnectionUtils.getRConnectionUtils().getConnection();
+        RConnectionUtils.ageStay_time("");
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<User> users = userService.selectList(null);
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            Date checkinTime = user.getCheckinTime();
+            Date checkoutTime = user.getCheckoutTime();
+            long diff = checkoutTime.getTime() - checkinTime.getTime();
+            long stay_time = diff / (24 * 60 * 60 * 1000 * 365);
+
+            String birthday = user.getBirthday();
+            Date birthdayDate = format.parse(birthday);
+            long diff2 =  checkoutTime.getTime()- birthdayDate.getTime();
+            long age = diff2 / (24 * 60 * 60 * 1000 * 365);
+            System.out.println();
+
+        }
+
+
+        System.out.println("show....");
+        return "chart";
+    }
+
+
+    @Secured({"ROLE_Admin", "ROLE_Normal", "ROLE_VIP"})
+    @RequestMapping("/userEdit")
+    public String userEdit(Model model) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        String username = userDetails.getUsername();
+        User user = userService.selectOne(username);
+        model.addAttribute("users", user);
+
+        model.addAttribute("userDetails", userDetails);
+        model.addAttribute("authorities", authorities);
+
+        System.out.println("userEdit....");
+        return "pages/userEdit";
+    }
+
+    @RequestMapping("/updateUser")
+    public String updateUser(HttpServletRequest request) {
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String username = request.getParameter("username");
+        String checkInDate = request.getParameter("checkInDate");
+        String checkOutDate = request.getParameter("checkOutDate");
+
+        User user = userService.selectOne(username);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date checkInDate1 = null;
+        Date checkOutDate1 = null;
+        try {
+            checkInDate1 = sdf.parse(checkInDate);
+            checkOutDate1 = sdf.parse(checkOutDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setCheckinTime(checkInDate1);
+        user.setCheckoutTime(checkOutDate1);
+
+        int updateUser = userService.updateByID(user);
+        if (updateUser == 1) {
+            System.out.println("updateUser success");
+        } else {
+            System.out.println("updateUser failure");
+        }
+
+        return "redirect:/userEdit";
+    }
+
 
     private void sendUserInfoToPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -110,7 +193,7 @@ public class UserController {
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < roles.size(); i++) {
             Role role = roles.get(i);
-            stringBuffer.append("ROLE_"+role.getName());
+            stringBuffer.append("ROLE_" + role.getName());
             if (i < roles.size() - 1) {
                 stringBuffer.append(",");
             }
@@ -122,7 +205,6 @@ public class UserController {
 
         //update user chick_in time
         //update user user_type
-
 
 
         return "redirect:/selectUser";

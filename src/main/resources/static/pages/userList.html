@@ -30,7 +30,7 @@
                 <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img"><span
                         th:text="${userDetails.getUsername()}"></span></a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">edit info</a></dd>
+                    <dd><a href="/userEdit">edit info</a></dd>
                     <dd><a href="/logout">Quit</a></dd>
                 </dl>
             </li>
@@ -88,12 +88,13 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>Number</th>
-                    <th>UserName</th>
+                    <th width="2%">Number</th>
+                    <th width="6%">UserName</th>
+                    <th width="10%">Name</th>
                     <th>gender</th>
                     <th>userType</th>
                     <th>email</th>
-                    <th>birthday</th>
+                    <th width="10%">birthday</th>
                     <th>id</th>
                     <th>checkin_time</th>
                     <th>checkout_time</th>
@@ -104,13 +105,15 @@
                     <!--        No，1，2，3，4，5-->
                     <td th:text="${stat.count}"></td>
                     <td th:text="${user.userName}"></td>
+                    <td th:text="${user.firstName}+' '+${user.lastName}"></td>
                     <td th:text="${user.gender}"></td>
                     <td th:text="${user.userType}"></td>
                     <td th:text="${user.email}"></td>
-                    <td th:text="${user.birthday}"></td>
+                    <td th:text="${#strings.substring(user.birthday,0,10)}"></td>
                     <td th:text="${user.id}"></td>
-                    <td th:text="${user.checkin_time}"></td>
-                    <td th:text="${user.checkout_time}"></td>
+                    <td th:text="${#dates.format(user.checkinTime, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${#dates.format(user.checkoutTime, 'yyyy-MM-dd')}"></td>
+
                 </tr>
                 </tbody>
             </table>

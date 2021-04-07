@@ -15,8 +15,11 @@ public class User implements Serializable {
     private String userType;
     private String registerTime;
     private String gender;
-    private Date  checkin_time;
-    private Date  checkout_time;
+    private Date  checkinTime;
+    private Date  checkoutTime;
+
+    private String firstName;
+    private String lastName;
 
     @TableField(exist = false)
     private List<Permission> permissionList;
@@ -87,20 +90,20 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public Date getCheckin_time() {
-        return checkin_time;
+    public Date getCheckinTime() {
+        return checkinTime;
     }
 
-    public void setCheckin_time(Date checkin_time) {
-        this.checkin_time = checkin_time;
+    public void setCheckinTime(Date checkinTime) {
+        this.checkinTime = checkinTime;
     }
 
-    public Date getCheckout_time() {
-        return checkout_time;
+    public Date getCheckoutTime() {
+        return checkoutTime;
     }
 
-    public void setCheckout_time(Date checkout_time) {
-        this.checkout_time = checkout_time;
+    public void setCheckoutTime(Date checkoutTime) {
+        this.checkoutTime = checkoutTime;
     }
 
     public List<Permission> getPermissionList() {
@@ -119,6 +122,22 @@ public class User implements Serializable {
         this.roleList = roleList;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -130,8 +149,10 @@ public class User implements Serializable {
                 ", userType='" + userType + '\'' +
                 ", registerTime='" + registerTime + '\'' +
                 ", gender='" + gender + '\'' +
-                ", checkin_time=" + checkin_time +
-                ", checkout_time=" + checkout_time +
+                ", checkinTime=" + checkinTime +
+                ", checkoutTime=" + checkoutTime +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", permissionList=" + permissionList +
                 ", roleList=" + roleList +
                 '}';

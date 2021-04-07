@@ -75,6 +75,13 @@
             <version>1.8.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.yannrichet/Rsession -->
+        <dependency>
+            <groupId>com.github.yannrichet</groupId>
+            <artifactId>Rsession</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -100,6 +107,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.vaadin.external.google</groupId>
+            <artifactId>android-json</artifactId>
+            <version>0.0.20131108.vaadin1</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.2.3</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+
 
     </dependencies>
 

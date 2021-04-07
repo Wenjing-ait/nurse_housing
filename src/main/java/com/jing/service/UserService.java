@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jing.mapper.UserMapper;
 import com.jing.pojo.Role;
 import com.jing.pojo.User;
+import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -28,6 +29,11 @@ public class UserService implements UserDetailsService {
         return insert;
     }
 
+    public int updateByID(User user) {
+        int updateUser = UserMapper.updateById(user);
+        return updateUser;
+    }
+
     public User selectOne(String username) {
         QueryWrapper<User> wrapper = new QueryWrapper();
         wrapper.eq("user_name", username);
@@ -35,8 +41,20 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+//    public List<User> selectList(User user) {
+//        List<User> users = UserMapper.selectList(null);
+//        return users;
+//    }
+
     public List<User> selectList(User user) {
-        List<User> users = UserMapper.selectList(null);
+        List<User> users = null;
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("gender", user.getGender());
+        if (!StringUtils.isNullOrEmpty(user.getGender())) {
+            users = UserMapper.selectList(queryWrapper);
+        } else {
+            users = UserMapper.selectList(null);
+        }
         return users;
     }
 
@@ -61,7 +79,7 @@ public class UserService implements UserDetailsService {
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < roles.size(); i++) {
             Role role = roles.get(i);
-            stringBuffer.append("ROLE_"+role.getName());
+            stringBuffer.append("ROLE_" + role.getName());
             if (i < roles.size() - 1) {
                 stringBuffer.append(",");
             }

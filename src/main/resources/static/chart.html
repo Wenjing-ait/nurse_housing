@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome to nurse hoursing</title>
+
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <link rel="stylesheet" href="./css/chart.css">
+    <script type="text/javascript" src="/js/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script src="../layui/layui.js"></script>
+    <script src="./js/home.js"></script>
+</head>
+
+
+<body>
+<div class="header">
+    <div><img src="./images/nursing-home-icon-1.jpg" style="width: 50px;height: 50px"></div>
+    <div class="header-title">
+        <span>HAPPY NURSING HOME</span>
+    </div>
+    <div>
+        <i class="layui-icon layui-icon-service" style="font-size: 50px; color: #1E9FFF;"></i>
+    </div>
+    <div>
+        <span class="hotline-label">TEL:</span>
+        <div class="hotline-txt">083-024-xxxx</div>
+    </div>
+
+</div>
+<h2 class="title-1">Data Analysis</h2>
+<div class="chart1">
+    <input id="users" type="hidden" th:value="${users}" readonly="true" style="background:#CCCCCC">
+
+    <div class="chart1-1">
+        <div class="chart1-1-1">
+            <div>
+                <div class="layui-input-block">
+                    <button type="button" id="showChart1" onclick="showChart1()" class="layui-btn"
+                            lay-filter="showChart1">Show AvgLife_Year(male)
+                    </button>
+                </div>
+            </div>
+            <div>
+                <img id="AvgLife_Year_male" src="http://localhost:8000/AvgLife_Year(male).png">
+            </div>
+
+
+        </div>
+        <div class="chart1-1-2">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;font-size: 2em">
+                <legend>The average life of men</legend>
+            </fieldset>
+            <ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">in 2000, was about 73 years.</div>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">in 2005 was about 74.5 years.</div>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">in 2010 was about 77 years.</div>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">in 2015 was about 77 years.</div>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">and so on</div>
+                    </div>
+                </li>
+            </ul>
+
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="">Expectancy Age:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="expectancyAge" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="">Target year:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="targetYear" name="targetYear" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="expectancyAge">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+        <div class="chart1-1-3">
+            <table class="layui-table" lay-even="" lay-skin="row">
+                <colgroup>
+                    <col width="150">
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Birth year</th>
+                    <th>Stay Time</th>
+                    <th>Checkin</th>
+                    <th>Checkout</th>
+                </tr>
+                </thead>
+                <tbody id="biuuu_city_list1">
+
+                </tbody>
+            </table>
+
+            <div id="demo20"></div>
+            <ul id="biuuu_city_list"></ul>
+
+        </div>
+    </div>
+
+    <div class="chart1-2">
+        <div class="chart1-1-1">
+            <img src="http://localhost:8000/Age_Year(male).png">
+        </div>
+        <div class="chart1-2-2">
+            22
+        </div>
+    </div>
+    <div class="chart1-3">
+        <div class="chart1-3-1">
+            <img src="http://localhost:8000/Age_Year(male).png">
+        </div>
+        <div class="chart1-3-2">
+            22
+        </div>
+    </div>
+    <div class="chart1-4">
+        <div class="chart1-4-1">
+            <img src="http://localhost:8000/Age_StayTime.png">
+        </div>
+        <div class="chart1-4-2">
+            22
+        </div>
+    </div>
+
+
+</div>
+<br>
+
+
+<script>
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+
+        var jsonStr = $("#users").attr("value");
+        var jsonArray = jQuery.parseJSON(jsonStr);
+        laypage.render({
+            elem: 'demo20'
+            , count: jsonArray.length
+            , prev: '<em>←</em>'
+            , next: '<em>→</em>'
+            , jump: function (obj) {
+                document.getElementById('biuuu_city_list1').innerHTML = function () {
+                    var arr = []
+                        , thisData = jsonArray.slice().splice(obj.curr * obj.limit - obj.limit, obj.limit);
+                    while (obj.curr < (jsonArray.length / 10 + 1)) {
+                        layui.each(thisData, function (index, item) {
+
+                            var checkinTimeYear;
+                            if (item.checkinTime != null) {
+                                var checkinTimeS = item.checkinTime.time;
+                                var checkinTimeDate = new Date(checkinTimeS);
+                                checkinTimeYear = checkinTimeDate.getFullYear();
+                            }
+                            var checkoutTimeYear;
+                            if (item.checkoutTime != null) {
+                                var checkinTimeS = item.checkoutTime.time;
+                                var checkoutTimeDate = new Date(checkinTimeS);
+                                checkoutTimeYear = checkoutTimeDate.getFullYear();
+                            }
+
+                            var birthdayYear = new Date(item.birthday);
+                            var age = birthdayYear.getFullYear();
+                            arr.push('<tr>');
+                            arr.push('<td>' + item.id + '</td>');
+                            arr.push('<td>' + age + '</td>');
+                            arr.push('<td>' + (checkoutTimeYear - checkinTimeYear) + '</td>');
+                            arr.push('<td>' + checkinTimeYear + '</td>');
+                            arr.push('<td>' + checkoutTimeYear + '</td>');
+                            arr.push('</tr>');
+                        });
+                        return arr.join('');
+                    }
+                }();
+            }
+        });
+    });
+
+    layui.use('form', function () {
+        let form = layui.form;
+        form.render();
+        form.on('submit(expectancyAge)', function (data) {
+            if (data.field.expectancyAge !== null && data.field.expectancyAge !== "") {
+                $.ajax({
+                    url: "/expectancyAge"
+                    , data: data.field
+                    , type: "post"
+                    , success: function (data) {
+                        console.log(data);
+                        $("#targetYear").val(data.year);
+                    }
+                })
+            } else {
+                layer.open({
+                    title: 'Notice'
+                    , content: "Please Input An Expectancy Age"
+                });
+                return false;
+            }
+            return false;
+        })
+    });
+
+
+    $(document).ready(function () {
+        // $("#showChart1").click();
+        // <button type="button" onclick="showChart1()" class="layui-btn" lay-submit="" lay-filter="showChart1">Show AvgLife_Year(male)</button>
+    });
+
+    function showChart1() {
+        $.ajax({
+            type: 'post',
+            url: '/generateAvgLifeYear',
+            data: {},
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+                // <img id="AvgLife_Year(male)" src="http://localhost:8000/AvgLife_Year(male).png">
+                $("#AvgLife_Year_male").attr("src", "http://localhost:8000/AvgLife_Year(male).png");
+                console.log(data);
+            },
+            error: function () {
+                console.log();
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>
