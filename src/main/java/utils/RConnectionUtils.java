@@ -40,8 +40,14 @@ public class RConnectionUtils {
     }
 
 
-    public static int expectancyAge(int expectancyAge) throws RserveException {
-        String sql1 = "SELECT (SELECT TIMESTAMPDIFF(YEAR,birthday,checkout_time)) as age,(SELECT YEAR(checkout_time)) as year1 FROM nurse_housing.user where gender='male';";
+    public static int expectancyAge(int expectancyAge, String gender) throws RserveException {
+        String sql1 = "";
+        if (gender.equalsIgnoreCase("male")) {
+            sql1 = "SELECT (SELECT TIMESTAMPDIFF(YEAR,birthday,checkout_time)) as age,(SELECT YEAR(checkout_time)) as year1 FROM nurse_housing.user where gender='male';";
+        } else {
+            sql1 = "SELECT (SELECT TIMESTAMPDIFF(YEAR,birthday,checkout_time)) as age,(SELECT YEAR(checkout_time)) as year1 FROM nurse_housing.user where gender='female';";
+        }
+
         RConnection connection = null;
         String host = "localhost";
         int port = 6311;
@@ -80,16 +86,22 @@ public class RConnectionUtils {
         return year;
     }
 
-
-    public static void avgLife_year(String fileName2) throws RserveException {
-        String sql1 = "SELECT (SELECT TIMESTAMPDIFF(YEAR,birthday,checkout_time)) as age,(SELECT YEAR(checkout_time)) as year1 FROM nurse_housing.user where gender='male';";
+    public static String lifeExpectancy(String gender, String year) throws RserveException {
+        String startYear = year.substring(0, year.indexOf(","));
+        String endYear = year.substring(year.lastIndexOf(",") + 1, year.length());
+        String sql = "";
+        if ("male".equalsIgnoreCase(gender)) {
+            sql = "SELECT (SELECT TIMESTAMPDIFF(YEAR,birthday,checkout_time)) as age,(SELECT YEAR(checkout_time)) as year1 FROM nurse_housing.user where gender='male';";
+        } else {
+            sql = "SELECT (SELECT TIMESTAMPDIFF(YEAR,birthday,checkout_time)) as age,(SELECT YEAR(checkout_time)) as year1 FROM nurse_housing.user where gender='female';";
+        }
         RConnection connection = null;
         String host = "localhost";
         int port = 6311;
         String db_name = "nurse_housing";
         String db_user = "root";
         String db_pwd = "root1234";
-        String fileName = "AvgLife_Year(male)";
+        String fileName = "LifeExpectancy(" + gender + "" + startYear + " - " + endYear + ")";
 
         try {
             connection = RConnectionUtils.getRConnectionUtils().getConnection();
@@ -97,22 +109,83 @@ public class RConnectionUtils {
             connection.eval("library('DBI')");
             connection.eval("library('RMySQL')");
             connection.eval("con <- DBI::dbConnect(RMySQL::MySQL(), dbname = '" + db_name + "', host = 'localhost', port = 3306, user = '" + db_user + "', password = '" + db_pwd + "')");
-            connection.eval("base <- dbGetQuery(con,\"" + sql1 + "\")");
+            connection.eval("base <- dbGetQuery(con,\"" + sql + "\")");
             connection.eval("print(base)");
             connection.eval("print(base$age)");
             connection.eval("print(base$year1)");
-//            connection.eval("setwd(\"/Users/lwj/RScript/image/\")");
-//            if(true){
-//                connection.eval("dbDisconnect(conn = con)");
-//                connection.close();
-//                return;
-//            }
+
+
+            connection.eval("table_age1 <- base$age");
+            connection.eval("year1 <- base$year1");
+
+            connection.eval("relation <- lm(table_age1~year1)");
+            connection.eval("pre_time <- data.frame(year1 = c(" + year + "))");
+
+            connection.eval("result <-  predict(relation,pre_time)");
+            connection.eval("print(result)");
+            connection.eval("age_Target=c(result)");
+            connection.eval("year2 = c(" + year + ")");
+
+            connection.eval("png(file=\"/Users/lwj/RScript/image/" + fileName + ".png\")");
+            connection.eval("plot(year2,age_Target,\n" +
+                    "     col = \"blue\",\n" +
+                    "     xlab = \"Year\",\n" +
+                    "     ylab = \"Age\",\n" +
+                    "     main = \"Life Expectancy (" + startYear + "-" + endYear + " " + gender + ")\",\n" +
+                    "     abline(lm(table_age1~year1)),\n" +
+                    "     cex = 1.3,pch = 16\n" +
+                    ")");
+
+
+            connection.eval("dev.off()");
+            connection.eval("dbDisconnect(conn = con)");
+            connection.close();
+        } catch (RserveException e) {
+            try {
+                connection.eval("dbDisconnect(conn = con)");
+                connection.close();
+            } catch (RserveException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        return fileName + ".png";
+    }
+
+
+    public static String avgLife_year(String gender) throws RserveException {
+        String sql = "";
+        if (gender.equalsIgnoreCase("male")) {
+            sql = "SELECT (SELECT TIMESTAMPDIFF(YEAR,birthday,checkout_time)) as age,(SELECT YEAR(checkout_time)) as year1 FROM nurse_housing.user where gender='male';";
+        } else {
+            sql = "SELECT (SELECT TIMESTAMPDIFF(YEAR,birthday,checkout_time)) as age,(SELECT YEAR(checkout_time)) as year1 FROM nurse_housing.user where gender='female';";
+        }
+
+        RConnection connection = null;
+        String host = "localhost";
+        int port = 6311;
+        String db_name = "nurse_housing";
+        String db_user = "root";
+        String db_pwd = "root1234";
+        String fileName = "AvgLife_Year(" + gender + ")";
+
+        try {
+            connection = RConnectionUtils.getRConnectionUtils().getConnection();
+            connection.setStringEncoding("utf8");
+            connection.eval("library('DBI')");
+            connection.eval("library('RMySQL')");
+            connection.eval("con <- DBI::dbConnect(RMySQL::MySQL(), dbname = '" + db_name + "', host = 'localhost', port = 3306, user = '" + db_user + "', password = '" + db_pwd + "')");
+            connection.eval("base <- dbGetQuery(con,\"" + sql + "\")");
+            connection.eval("print(base)");
+            connection.eval("print(base$age)");
+            connection.eval("print(base$year1)");
+
             connection.eval("png(file=\"/Users/lwj/RScript/image/" + fileName + ".png\")");
             connection.eval("plot(base$year1,base$age,\n" +
                     "     col = \"blue\",\n" +
                     "     xlab = \"year\",\n" +
                     "     ylab = \"age\",\n" +
-                    "     main = \"avgLife vs Year (2000-2015 Male)\",\n" +
+                    "     main = \"avgLife vs Year (2000-2015 " + gender + ")\",\n" +
                     "     abline(lm(base$age~base$year1)),\n" +
                     "     cex = 1.3,pch = 16\n" +
                     ")");
@@ -128,6 +201,7 @@ public class RConnectionUtils {
             }
             e.printStackTrace();
         }
+        return fileName + ".png";
     }
 
 

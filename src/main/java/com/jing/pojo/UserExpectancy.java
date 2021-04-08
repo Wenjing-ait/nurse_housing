@@ -4,6 +4,7 @@ public class UserExpectancy {
     private int age;
     private int year;
     private String msg;
+    private String fileName;
 
     public int getAge() {
         return age;
@@ -27,5 +28,13 @@ public class UserExpectancy {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

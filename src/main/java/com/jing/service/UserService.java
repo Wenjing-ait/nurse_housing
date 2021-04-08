@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
     public List<User> selectList(User user) {
         List<User> users = null;
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("gender", user.getGender());
+//        queryWrapper.eq("gender", user.getGender());
         if (!StringUtils.isNullOrEmpty(user.getGender())) {
             users = UserMapper.selectList(queryWrapper);
         } else {
