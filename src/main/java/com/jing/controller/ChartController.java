@@ -17,9 +17,8 @@ public class ChartController {
 
     @RequestMapping("/chart")
     public String chart(Model model) {
-        System.out.println("chart....");
         User user = new User();
-        user.setGender("Male");
+        user.setGender(null);
         List<User> users = userService.selectList(user);
         JSONArray jsonarray = JSONArray.fromObject(users);
         String jsonstr = jsonarray.toString();

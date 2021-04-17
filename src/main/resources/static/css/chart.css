@@ -43,11 +43,11 @@
     /*border: #34b9ff 1px solid;*/
 }
 
-.chart1-1-2,.chart1-2-2 {
+.chart1-1-2, .chart1-2-2 {
     border-right: lightseagreen 1px solid;
 }
 
-.chart1-1-2 span,.chart1-2-2 span {
+.chart1-1-2 span, .chart1-2-2 span {
     letter-spacing: 2px;
     line-height: 10px;
 }
@@ -61,7 +61,7 @@
 }
 
 
-.chart1-1 ,.chart1-2{
+.chart1-1, .chart1-2 {
     display: grid;
     grid-template-columns: 2fr 1fr 2fr;
     border: lightseagreen 1px solid;
@@ -82,7 +82,7 @@
 }
 
 
-.chart1-3-1,  .chart1-3-3 {
+.chart1-3-1, .chart1-3-3 {
     border-right: lightseagreen 1px solid;
 }
 
@@ -99,4 +99,15 @@ th {
     text-align: left;
 }
 
+
+.chart1-1-1-1,.chart1-2-1-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 10px;
+}
+
+.layui-input-block {
+    margin-left: 10px;
+    min-height: 30px;
+}
 

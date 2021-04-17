@@ -49,15 +49,14 @@ public class UserService implements UserDetailsService {
     public List<User> selectList(User user) {
         List<User> users = null;
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq("gender", user.getGender());
-        if (!StringUtils.isNullOrEmpty(user.getGender())) {
+        if (user != null && !StringUtils.isNullOrEmpty(user.getGender())) {
+            queryWrapper.eq("gender", user.getGender());
             users = UserMapper.selectList(queryWrapper);
         } else {
             users = UserMapper.selectList(null);
         }
         return users;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
